@@ -17,7 +17,9 @@ const allowedOrigins = [
     'http://localhost:5173', 
     'http://localhost:5174', 
     'https://vendors.unoshops.com', 
-    'https://customers.unoshops.com'
+    'https://customers.unoshops.com',
+    'https://rx25cb80-5174.inc1.devtunnels.ms/',
+    'https://rx25cb80-5173.inc1.devtunnels.ms/',
     // Add more as needed, e.g., 'https://admin.unoshops.com' if your admin panel also needs to interact
 ];
 

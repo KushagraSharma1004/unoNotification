@@ -12,11 +12,30 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
+
+const allowedOrigins = [
+    'http://localhost:5173', 
+    'http://localhost:5174', 
+    'https://vendors.unoshops.com', 
+    'https://customers.unoshops.com'
+    // Add more as needed, e.g., 'https://admin.unoshops.com' if your admin panel also needs to interact
+];
+
 // Configure CORS: In production, replace '*' with your frontend's domain (e.g., 'https://vendors.unoshops.com')
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173' // Adjust this for your React app's URL
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
+    methods: ['GET', 'POST'], // Specify allowed HTTP methods if needed
+    credentials: true, // If your frontend sends cookies/authorization headers
+    optionsSuccessStatus: 204 // Some legacy browsers (IE11, various SmartTVs) choke on 200
 }));
-
 // --- VAPID Keys Setup ---
 // IMPORTANT: For production, generate these ONCE and store them securely
 // in environment variables (e.g., in a .env file, or your hosting provider's config).

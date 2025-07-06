@@ -112,7 +112,7 @@ app.post('/api/new-order', async (req, res) => {
     const payload = JSON.stringify({
         title: `New Order! #${orderId}`,
         body: `From: ${customerName}, Total: ₹${orderTotal}`,
-        url: `https://vendors.unoshops.com/AllOrders/?${orderId}` // Deep link to order details
+        url: `https://vendors.unoshops.com/#/AllOrders/?${orderId}` // Deep link to order details
     });
 
     // Send push notification to all subscribed devices for this vendor
